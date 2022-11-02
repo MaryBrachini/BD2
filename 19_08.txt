@@ -1,0 +1,73 @@
+create table cliente (
+idCliente integer, 
+nome varchar (40) not null,
+dtNasc date,
+constraint pk_cliente primary key (idCliente)
+);
+
+create table telefones(
+idTel integer,
+telefone integer,
+idCliente integer, 
+constraint pk_telefones primary key (idTel, idCliente),
+constraint fk_telefones  foreign key(idCliente) references cliente
+);
+
+create table pedido(
+idPed integer,
+total real,
+dataPed date,
+idCliente integer,
+constraint pk_pedido primary key (idPed),
+constraint fk_pedido  foreign key(idCliente) references cliente
+);
+
+create table produto(
+idProd integer,
+nome varchar (40) not null,
+preco real,
+constraint pk_produto primary key (idProd)
+);
+
+create table PedidoProduto(
+idPed integer,
+idProd integer,
+constraint pk_PedidoProduto primary key (idPed,idProd),
+constraint fk_PedidoProduto foreign key(idPed) references pedido,
+constraint fk_ProdutoPedido foreign key(idProd) references produto
+);
+
+insert into cliente values (2,'Carlos','01/01/1990'),(3,'Joanna','08/03/1975'),(4,'Marianna','15/11/1999');
+select * from cliente;
+
+-- apresentar duas tabelas e as unir
+select nome, telefone from cliente
+inner join telefones
+on cliente.idCliente = telefones.idCliente;
+
+insert into telefones values (1,'17 91234-1234',2),(2,'17 99999-9999',2),(4,'17 91234-4321',4);
+ALTER TABLE telefones alter column telefone type varchar(15);
+select * from telefones;
+
+insert into produto values (11,'sabão',15.00);
+insert into produto values(18,'Macarrão',5.99),(17,'Bolacha',1.99),(10,'Refrigerante',3.59);
+select * from produto;
+
+insert into pedido values (1234,7.98,'19/08/2022',1);
+insert into pedido values (456,1.99,'18/08/2022',3),(789,3.59,'20/08/2022',2),(147,15.00,'07/08/2022',4);
+select * from  pedido;
+
+insert into PedidoProduto values (1234,18),(1234,17);
+insert into PedidoProduto values (456,17),(789,10),(147,11);
+select * from PedidoProduto;
+
+
+
+
+
+
+
+
+
+
+

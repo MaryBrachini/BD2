@@ -1,0 +1,107 @@
+create table pessoa (
+    cpf varchar (15),
+    nome varchar(50),
+    datanasc date not null,
+    constraint pk_pessoa primary key (cpf)
+);
+
+select * from pessoa;
+
+insert into pessoa values ('123.456.789-12','caarlos','01/01/1990');
+
+-- tabela 1 - N ------------------------
+
+create  table cliente(
+cpf varchar(13) not null,
+nome varchar(60)not null,
+constraint pk_cliente primary key (cpf)
+);
+
+create table pedido (
+cod_pedido integer not null,
+valor numeric (9,2)not null,
+cpf_cli varchar(13)not null,
+constraint pk_pedido primary key (cod_pedido),
+constraint fk_pedido_cliente foreign key (cpf_cli) references cliente
+);
+
+select * from cliente;
+
+insert into cliente values ('12312312312','joao');
+
+select * from pedido;
+
+insert into pedido values(1,10.50,12312312312);
+
+
+
+-- tabela N - N ----------------------
+
+create  table funcionario(
+codFunc serial,
+nome varchar(50)not null,
+constraint pk_funcionario primary key (codFunc)
+);
+
+create table projeto(
+idpg integer,
+nomep varchar(50) not null,
+constraint pk_projeto primary key (idpg)
+);
+
+select * from projeto;
+
+insert into projeto values (1,'projeto teste');
+
+create table trabalha(
+codfunc integer,
+idpg integer,
+constraint pk_trabalha primary key (codfunc,idpg),
+constraint fk_func_trabalha foreign key (codFunc)references funcionario,
+constraint fk_pj_trabalha foreign key (idpg) references projeto
+);
+
+select * from trabalha;
+
+insert into trabalha values (1,1);
+                                                                                                                                                           
+
+-- tabela 1 - N --------------------
+
+create  table funcionario(
+codFunc serial,
+nome varchar(50)not null,
+constraint pk_funcionario primary key (codFunc)
+);
+select * from funcionario;
+
+insert into funcionario (nome) values ('joao');
+
+
+
+create table dependente (
+coddepend integer,
+nome varchar(50)not null,
+codFunc integer,
+constraint pk_dependente primary key (coddepend,codFunc),
+constraint fk_dependente_funcionario foreign key (codFunc) references funcionario
+);
+
+select * from dependente;
+
+insert into dependente values('1','josefa','');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

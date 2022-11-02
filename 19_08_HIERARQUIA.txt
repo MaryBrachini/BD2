@@ -1,0 +1,47 @@
+--Hierarquia 
+
+create table carro(
+placa varchar(15),
+modelo varchar(30),
+preco real, 
+ano integer,
+constraint pk_carro primary key (placa)
+);
+
+create table esportivo (
+placa varchar(15),
+valmax real,
+constraint pk_esportivo primary key (placa),
+constraint fk_carro_esportivo foreign key (placa) references carro
+);
+
+create table seda(
+placa varchar(15),
+passageiros integer,
+constraint pk_seda primary key (placa),
+constraint fk_carro_seda foreign key (placa) references carro
+);
+
+insert into carro values ('KQJ123','Etanol',50000,2020);
+insert into carro values ('BHJ456','economico',800000,2050),('RGA789','fusca',100000,1970),('PLU','voador',15000,5020);
+select * from carro;
+
+insert into esportivo values ('PLU',58746);
+insert into esportivo values ('BHJ456',45);
+select * from esportivo;
+
+
+insert into seda values ('PLU',5),('RGA789',6);
+select * from seda;
+
+
+select modelo, passageiros from carro
+inner join seda
+on carro.placa = seda.placa;
+
+
+select modelo, passageiros, velmax from carro
+inner join seda
+on carro.placa = seda.placa
+inner join esportivo
+on carro.placa = esportivo.placa;

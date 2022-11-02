@@ -1,0 +1,64 @@
+create table carro(   
+chassi character varying (15),
+placa character varying(7) not null,
+modelo character varying(20) not null,
+montadora character varying(20)not null,
+ano integer not null,
+preço real not null,
+CONSTRAINT pk_carro PRIMARY KEY (chassi))
+
+INSERT INTO carro VALUES ('1','AWG725','Voador','Aquela',2050,10000000);
+INSERT INTO carro VALUES ('2','VGD427','fusca','Aquela',1970,5);
+INSERT INTO carro VALUES ('3','VKI175','uno','essa',2000,48);
+INSERT INTO carro VALUES ('4','MJH175','gol','essa',1999,70);
+INSERT INTO carro VALUES ('5','175BDFB','bola','Aquela',2010,1);
+INSERT INTO carro VALUES ('6','145SVR','aquatico','higor',2030,1000000);
+INSERT INTO carro VALUES ('7','4561NGF','com rodas','higor',1800,2000);
+INSERT INTO carro VALUES ('8','156GFF','sem rodas','Aquela',1000,1000);
+INSERT INTO carro VALUES ('9','HEY5455','invisivel','Simas Turbo',2022,15000);
+INSERT INTO carro VALUES ('10','14GDSG','normal','Simas Turbo',2012,5000);
+
+--3 Selecione todos os carros da FIAT de 2007
+select * from carro where montadora = 'higor' and ano = 2030;
+
+--4 Selecione todos os carros com valor superior a 30000 e que não sejam da FORD
+select * from carro where preço > 30000 and modelo not in ('aquatico');
+
+--5 Selecione o modelo e a montadora dos carros de 2008 até hoje que custam entre 20 e 40 mil
+select modelo, montadora from carro where ano between 2000 and 2030 and preço between 20000 and 10000000;
+
+--6 Faça uma consulta que retorne o Modelo do carro, a montadora e o preço em ordem decrescente.
+select * from carro order by modelo desc, montadora desc, preço desc;
+
+--7 Faça uma consulta que retorne o Modelo do carro (substitua o nome modelo para Nome do Carro), a Montadora, 
+--o Ano do carro como Ano do Carro e o seu preço, em ordem crescente de todos os carros entre 2007 e 2010.
+select modelo as "Nome do Carro", montadora,ano as "Ano do Carro", preço from carro where ano >= 2000 
+and ano <= 2030 order by preço;
+
+--8 Repita a consulta 7 com o operador BETWEEN
+select modelo as "Nome do Carro", montadora,ano as "Ano do Carro", preço from carro where ano between 2000 
+and 2030 order by preço;
+
+--9 Faça uma consulta que retorne em ordem crescente, os modelos dos carros de 2010, as montadoras e os preços. 
+--Coloque um Alias para modelo de “Carros de 2010”
+select modelo as "Carros de 2010", montadora, preço from carro where ano = 2010 order by preço;
+
+--10 Faça uma consulta que retorne o modelo e o preço máximo de cada carro
+select modelo as "Carros de 2010", montadora, preço from carro where ano = 2010 order by preço;
+
+--11 Seleciona a quantidade de carros e a montadora agrupados pela montadora
+select montadora,count(chassi) from carro Group by montadora;
+
+--12 Seleciona a quantidade de carros e a montadora agrupados pela montadora e ordenados pela montadora
+select montadora,count(chassi) from carro Group by montadora order by montadora;
+
+--13 Selecione a soma e a média dos preços dos carros. Crie um ALIAS para a soma e média.
+select montadora, sum(preço),avg(preço) as "soma e média" from carro Group by montadora;
+
+--14 Selecione o modelo, o ano e o preço máximo de cada ano do carro Pálio
+select modelo, ano, max(preço) from carro having modelo = 'Voador' Group by montadora;
+
+--15 Selecione todos os carros que possuem f como primeira letra ou que possuem a na última.
+--16 Repita a consulta 15 de tal forma que não faça diferenciação entre ‘F’ e’f’ e ‘A’ e ‘a’
+--17 Selecione o modelo, a montadora e o preço de todos os carros da montadora FIAT que possuam alguma letra i, ordenados pelo modelo.
+--18 Selecione todos os carros ente 2008 e 2011 que possuam algum i no modelo ordenados em forma decrescente pelo ano.

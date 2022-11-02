@@ -1,0 +1,124 @@
+--1 - Construa as tabelas do modelo relacional acima. Para as chaves estrangeiras, 
+--coloque as cláusulas ON DELETE CASCADE ON UPDATE CASCADE.
+
+create table prof (
+    prontuarioP integer,
+    pnome varchar(20),
+    snome varchar(40),
+    dtnasc date,
+    constraint pk_prof primary key (prontuarioP)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+create table curso (
+    idcurso integer,
+    nomecurso varchar(30),
+    nsem integer,
+    dtfundacao date,
+    constraint pk_curso primary key (idcurso)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+create table aluno (
+    prontuarioA integer,
+    pnome varchar(20),
+    snome varchar(40),
+    dtnasc date,
+    sexo char(1),
+    idcurso integer,
+    constraint pk_aluno primary key (prontuarioA),
+    constraint fk_curso_aluno foreign key (idcurso) references curso
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+create table ProfLecionaAluno(
+    prontuarioA integer,
+    prontuarioP integer,
+    ano integer,
+    semestre integer,
+    nota real,
+    constraint  fk_aluno_prof foreign key (prontuarioA) references aluno
+    ON DELETE CASCADE ON UPDATE CASCADE,
+    constraint  fk_prof_aluno foreign key (prontuarioP) references prof
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+--2 - INSIRA 5 (CINCO) linhas em cada tabela.
+insert into prof values (123,'André','Gobbi','12/12/1978');
+insert into prof values (456,'Cristiane','Pascoali','01/01/1973');
+insert into prof values (789,'Rafeal','Miani','10/10/1985');
+insert into prof values (147,'Eder','Pansani','04/08/1980');
+insert into prof values (258,'Ivan','OLiveira','15/09/1984');
+
+insert into curso values (1,'LP1',3,'08/07/1999');
+insert into curso values (2,'Redes',3,'30/12/1975');
+insert into curso values (3,'BD',4,'02/04/1995');
+insert into curso values (4,'DW',4,'25/11/2000');
+insert into curso values (5,'ENG',4,'04/06/2016');
+
+insert into aluno values (321,'Felipe','Rodrigues','27/02/1999','M',3);
+insert into aluno values (654,'Higor','Batista','01/01/2003','M',1);
+insert into aluno values (987,'Dimas','Limas','10/10/2003','M',2);
+insert into aluno values (741,'Eloisy','Moreira','04/08/2001','F',5);
+insert into aluno values (852,'Mary','Brachini','24/07/2002','F',4);
+
+insert into ProfLecionaAluno values (321,123,2022,4,'7');
+insert into ProfLecionaAluno values (654,456,2020,3,'7');
+insert into ProfLecionaAluno values (987,789,2014,3,'7');
+insert into ProfLecionaAluno values (741,147,2021,4,'7');
+insert into ProfLecionaAluno values (852,258,2025,4,'7');
+
+--------------------------------------------------------------------------------------------
+
+CREATE TABLE PAIS(
+     nome VARCHAR (50), 
+     capital VARCHAR (50) NOT NULL, 
+     populacao real, 
+     idh real, 
+     continente varchar (30), 
+     CONSTRAINT PK_PAIS PRIMARY KEY (nome));
+
+INSERT INTO PAIS VALUES ('Afeganistão','Cabul',29.1,0.349,'Ásia'),('Angola', 'Luanda', 18.4, 0.403, 'África'),('Áustria', 'Viena', 8.2, 0.895, 'Europa');
+INSERT INTO PAIS VALUES ('Bolívia','La Paz',10.9,0.675,'América do Sul'),('Camarões', 'Iaundê', 19.1, 0.482, 'África'),('Alemanha', 'Berlim', 81.76, 0.920, 'Europa');
+INSERT INTO PAIS VALUES ('Argentina','Buenos Aires',40.0,0.811,'América do Sul'),('Austrália', 'Camberra', 22.6, 0.938, 'Oceania'),('Brasil', 'Brasília', 190.732, 0.730, 'América do Sul');
+INSERT INTO PAIS VALUES ('Canadá','Ottawa',34.48,0.911,'América do Norte'),('Chile', 'Santiago do Chile', 17.09, 0.819, 'América do Sul'),('Coréia do Sul', 'Seul', 48.3, 0.909, 'Ásia');
+INSERT INTO PAIS VALUES ('Costa do Marfim','Abidjan',20.1,0.397,'África'),('Cuba', 'Havana', 11.07, 0.780, 'América Central'),('Equador', 'Quito', 14.3, 0.724, 'América do Sul');
+INSERT INTO PAIS VALUES ('Espanha','Madri',47.19,0.885,'Europa'),('Estados Unidos da América', 'Washington DC', 308.745, 0.937, 'América do Norte'),('França', 'Paris', 65.3, 0.893, 'Europa');
+INSERT INTO PAIS VALUES ('Guatemala','Cidade da Guatemala',14,0.560,'América Central'),('Islândia', 'Reykjavik', 0.318, 0.906, 'Europa'),('Rússia', 'Moscou', 142.9, 0.788, 'Europa e Ásia');
+INSERT INTO PAIS VALUES ('Argélia','Argel',40.400,0.748,'África'),('África do Sul', 'Pretória', 57.39, 0.709, 'África'),('Arábia Saudita', 'Riade', 33.55, 0.854, 'Ásia');
+INSERT INTO PAIS VALUES ('Bélgica','Bruxelas',11.500,0.931,'Europa'),('Bulgária', 'Sófia', 7.03, 0.816, 'Europa'),('Burquina Faso', 'Uagadugu', 19.7, 0.305, 'África');
+INSERT INTO PAIS VALUES ('Cabo Verde','Praia',0.553,0.665,'África'),('Colômbia', 'Bogotá', 49.464, 0.767, 'América do Sul'),('Croácia', 'Zagreb', 4.16, 0.767, 'Europa');
+INSERT INTO PAIS VALUES ('Dinamarca','Copenhaga',5.75,0.866,'Europa'),('Egito', 'Cairo', 99.375, 0.707, 'África'),('Filipinas', 'Manila', 106.512, 0.718, 'Ásia');
+
+select * from PAIS;
+
+--3 - Atualize o idh da Espanha para 0.863
+update PAIS set idh = 0.863 where nome = 'Espanha';
+select * from PAIS where nome = 'Espanha';
+
+--4 - Atualize a população do Brasil para 200.
+update PAIS set populacao = 200 where nome = 'Brasil';
+select * from PAIS where nome = 'Brasil';
+
+--5 - Elimine todos os países com idh menor que 0.4.
+select distinct idh from PAIS where idh < 0.4 ;
+
+--6 - Selecione todos os países da Europa ou que possuam idh menor que 0.7. Ordene pelo
+--idh em ordem crescente.
+select nome,idh,continente from PAIS where continente = 'Europa' and idh < 0.7 ORDER BY idh;
+
+--7 - Selecione todos os países da Ásia com idh entre 0.5 e 0.8 com população maior que 50
+--em ordem decrescente da população.
+select nome,idh,populacao,continente from PAIS where continente = 'Ásia' AND idh >= 0.5 and idh <= 0.8 and populacao >= 50 ORDER BY populacao;
+
+--8 - Faça uma consulta que agrupe a quantidade de países que cada continente possui
+--(usar o count). Ordene pelo continente
+select count(continente) from PAIS Group by continente order by continente;
+
+--9 - Faça uma consulta que retorne o total de população de cada continente, desde que a
+--soma da população seja maior que 100 (usar HAVING).
+select continente, sum(populacao) from PAIS group by continente having sum(populacao) >100;
+
+--10 - Selecione todos os países que tenham uma letra A no início OU que tenha uma letra r
+--no meio do nome ou que tenha uma letra i na penúltima letra do nome do país.
+select nome from PAIS where nome like 'A%' or nome like '%r%' or nome like '%i_' ;

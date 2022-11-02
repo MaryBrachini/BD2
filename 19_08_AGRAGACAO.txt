@@ -1,0 +1,62 @@
+--AGREGAÇÃO
+
+create table pessoa(
+cpf varchar(15),
+nome varchar(40) not null,
+constraint pk_pessoa primary key (cpf)
+);
+
+create table empresa(
+cnpj varchar(20),
+nome varchar(50),
+constraint pk_empresa primary key (cnpj)
+);
+
+create table entrevista(
+cpf varchar(15),
+cnpj varchar(20),
+constraint pk_entrevista primary key (cpf,cnpj),
+constraint fk_entrevista_pessoa foreign key (cpf) references pessoa,
+constraint fk_entrevista_empresa foreign key (cnpj) references empresa
+);
+
+create table trabalho(
+codTrab integer,
+descricao varchar(100),
+cpf varchar(15),
+cnpj varchar(20),
+constraint pk_trabalho primary key (codTrab),
+constraint fk_trabalho_pessoa foreign key (cpf,cnpj) references entrevista
+); 
+
+
+
+insert into pessoa values('123.123.123-12','carlitos'),('456.123.789.-96','joanna'),
+('789.456.123-00','Rosa'),('963.852.741-99','valter');
+select * from pessoa;
+
+insert into empresa values ('123.456.789.123.456','Empresa teste');
+select * from empresa;
+
+insert into entrevista values ('123.123.123-12','123.456.789.123.456'),('456.123.789.-96','123.456.789.123.456'),
+('789.456.123-00','123.456.789.123.456'),('963.852.741-99','123.456.789.123.456');
+select * from entrevista;
+
+insert into trabalho values (1,'Conseguiu e foi muito bem','789.456.123-00','123.456.789.123.456');
+select * from trabalho;
+
+
+select pessoa.nome, empresa.nome, descricao from pessoa
+inner join entrevista on pessoa.cpf = entrevista.cpf
+inner join empresa on empresa.cnpj = entrevista.cnpj;
+
+
+
+
+
+
+
+
+
+
+
